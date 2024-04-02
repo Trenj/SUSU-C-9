@@ -21,7 +21,8 @@ public:
         // WSAStartup инициализирует использование Winsock DLL со спецификацией версии 2.2.
         // MAKEWORD(2, 2) создает номер версии Winsock, 2.2 в данном случае.
         // &wsaData - указатель на структуру WSADATA, которая будет заполнена информацией о Winsock.
-        if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+        if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) 
+        {
             std::cerr << "WSAStartup failed." << std::endl; // Вывод сообщения об ошибке при неудачной инициализации.
             exit(EXIT_FAILURE); // Выход из программы с ошибкой.
         }
@@ -31,7 +32,8 @@ public:
         // AF_INET означает, что используется сеть для коммуникации с IPv4 адресами.
         // SOCK_STREAM указывает на использование протокола TCP, обеспечивающего надежную потоковую передачу данных.
         // Последний аргумент 0 указывает, что используется протокол по умолчанию для AF_INET, SOCK_STREAM, то есть TCP.
-        if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
+        if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) 
+        {
             std::cerr << "Socket creation failed." << std::endl; // Сообщение об ошибке в случае неудачи создания сокета.
             WSACleanup(); // Вызов WSACleanup для освобождения ресурсов Winsock, занятых приложением.
             exit(EXIT_FAILURE); // Завершение программы с кодом ошибки, указывающим на неудачное выполнение.
@@ -46,7 +48,8 @@ public:
         // Функция inet_pton преобразует IP-адреса из текстового представления (например, "127.0.0.1") в числовое (структура in_addr).
         // AF_INET указывает на то, что преобразование производится для IPv4 адреса.
         // В случае успеха inet_pton возвращает 1, в случае ошибки - 0 или -1.
-        if (inet_pton(AF_INET, address, &serv_addr.sin_addr) <= 0) {
+        if (inet_pton(AF_INET, address, &serv_addr.sin_addr) <= 0) 
+        {
             std::cerr << "Invalid address: Address not supported." << std::endl; // Вывод сообщения об ошибке при неверном адресе.
             closesocket(sock); // Закрытие сокета в случае ошибки.
             WSACleanup(); // Освобождение ресурсов Winsock.
@@ -57,7 +60,8 @@ public:
         // Функция connect инициирует установление соединения на сокете, указывая на сокет клиента, адрес сервера и размер структуры адреса.
         // Соединение является двусторонним, и после успешного выполнения, клиент может отправлять данные и получать ответы.
         // Если connect возвращает значение меньше 0, это означает ошибку при попытке соединения.
-        if (connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
+        if (connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) 
+        {
             std::cerr << "Connection Failed." << std::endl; // Вывод сообщения о неудаче при попытке соединения.
             closesocket(sock); // Закрытие сокета в случае неудачи.
             WSACleanup(); // Очистка ресурсов Winsock.
