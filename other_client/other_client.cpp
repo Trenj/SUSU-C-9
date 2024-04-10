@@ -1,4 +1,4 @@
-﻿// Клиент 1
+﻿// Клиент 2
 #include <iostream>
 #include <Winsock2.h>
 #include <Ws2tcpip.h>
