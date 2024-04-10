@@ -19,18 +19,22 @@ void client_handler(SOCKET client_socket) {
         // Получаем имя файла от клиента
         int bytesReceived = recv(client_socket, buffer, sizeof(buffer), 0);
         if (bytesReceived > 0) {
-            buffer[bytesReceived] = '0'; // Добавляем нулевой символ в конец строки
+            buffer[bytesReceived] = '\0'; // Добавляем нулевой символ в конец строки
             filename = std::string(buffer);
 
-            // Открываем файл
-            std::ifstream file(filename);
+            // Добавляем путь к папке с файлами к имени файла
+            filename = "C:\\Users\\Trenj\\source\\repos\\SUSU-C-9\\main_server\\files\\" + filename;
+
+                // Открываем файл
+                std::ifstream file(filename);
             if (file.is_open()) {
                 std::stringstream file_content;
                 file_content << file.rdbuf();
                 file.close();
 
                 // Отправляем содержимое файла клиенту
-                send(client_socket, file_content.str().c_str(), static_cast<int>(file_content.str().size()), 0);
+                std::string file_data = file_content.str();
+                send(client_socket, file_data.c_str(), static_cast<int>(file_data.size()), 0);
             }
             else {
                 // Если файл не может быть открыт, отправляем ошибку
@@ -50,6 +54,7 @@ void client_handler(SOCKET client_socket) {
 
     closesocket(client_socket);
 }
+
 
 
 int main() {
